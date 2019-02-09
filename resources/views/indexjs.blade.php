@@ -70,31 +70,30 @@
   <script type="text/javascript">
 
     function getNextItem(data) {
-        i = data.current_page+1;
+        i = data.current_page+1; // página atual mais um.
         if (data.current_page == data.last_page)
-            s = '<li class="page-item disabled">';
+            s = '<li class="page-item disabled">'; //se a última página é igual a página atual é desativado o click do próximo.
         else
             s = '<li class="page-item">';
-        s += '<a class="page-link" ' + 'pagina="'+i+'" ' + ' href="javascript:void(0);">Próximo</a></li>';
+        s += '<a class="page-link" ' + 'pagina="'+i+'" ' + ' href="javascript:void(0);">Próximo</a></li>'; //coloca o valor da página atual na variável pagina
         return s;
     }
 
     function getPreviousItem(data) {
-        i = data.current_page-1;
+        i = data.current_page-1; //página atual menos 1
         if (data.current_page == 1)
-            s = '<li class="page-item disabled">';
+            s = '<li class="page-item disabled">'; //se a página atual é igual a 1 é desativado o click da anterior.
         else
             s = '<li class="page-item">';
-        s += '<a class="page-link" ' + 'pagina="'+i+'" ' + ' href="javascript:void(0);">Anterior</a></li>';
+        s += '<a class="page-link" ' + 'pagina="'+i+'" ' + ' href="javascript:void(0);">Anterior</a></li>'; //coloca o valor da página atual na variável pagina
         return s;
     }
 
     function getItem(data, i) {
         if (data.current_page == i)
-            s = '<li class="page-item active">';
-        else
+            s = '<li class="page-item active">';  //se a página atual é igual ao inicio (i)
             s = '<li class="page-item">';
-        s += '<a class="page-link" ' + 'pagina="'+i+'" ' + ' href="javascript:void(0);">' + i + '</a></li>';
+        s += '<a class="page-link" ' + 'pagina="'+i+'" ' + ' href="javascript:void(0);">' + i + '</a></li>';  //coloca o valor da página atual na variável pagina
         return s;
     }
 
@@ -113,30 +112,30 @@
 
         n = 10;
 
-        if (data.current_page - n/2 <= 1)
+        if (data.current_page - n/2 <= 1)  // caso em que a página atual for menor ou igual a 6.
             inicio = 1;
-        else if (data.last_page - data.current_page < n)
+        else if (data.last_page - data.current_page < n)  // caso em que a última página menos a página atual for menor que 10.
             inicio = data.last_page - n + 1;
         else
-            inicio = data.current_page - n/2;
+            inicio = data.current_page - n/2;  //página atual - 5.
 
-        fim = inicio + n-1;
+        fim = inicio + n-1;  //exemplo 91 + 100-1;
 
         for (i=inicio;i<=fim;i++) {
             $("#paginationNav>ul").append(
                 getItem(data,i)
             );
         }
-        $("#paginationNav>ul").append(
+            $("#paginationNav>ul").append(
             getNextItem(data)
-        );
-    }
+            );
+        }
 
     function montarLinha(cliente) {
         return '<tr>' +
             '  <th scope="row">' + cliente.id + '</th>' +
             '  <td>' + cliente.nome + '</td>' +
-            '  <td>' + cliente.sobrenome + '</td>' +
+            '  <td>' + cliente.sobrenome + '</td>' +                  //montando cada linha da tabela
             '  <td>' + cliente.email + '</td>' +
             '</tr>';
     }
@@ -145,7 +144,7 @@
         $("#tabelaClientes>tbody>tr").remove();
         for(i=0;i<data.data.length;i++) {
             $("#tabelaClientes>tbody").append(
-                montarLinha(data.data[i])
+                montarLinha(data.data[i])  //passando refererência do dado para montar linha da tabela
             );
         }
     }
@@ -158,11 +157,11 @@
             montarPaginator(resp);
             $("#paginationNav>ul>li>a").click(function(){
                 // console.log($(this).attr('pagina') );
-                carregarClientes($(this).attr('pagina'));
+                carregarClientes($(this).attr('pagina')); //pega o click do botão do navegador para mudar de página
             })
-            $("#cardtitle").html( "Exibindo " + resp.per_page +
-                " clientes de " + resp.total +
-                " (" + resp.from + " a " + resp.to +  ")" );
+            $("#cardtitle").html( "Exibindo " + resp.per_page + //mostra quantos clientes por página são mostrados
+                " clientes de " + resp.total + //pega o valor total dos dados no banco de dados
+                " (" + resp.from + " a " + resp.to +  ")" );  //pega o primeiro valor apresentado até o último da tela
         });
     }
 
